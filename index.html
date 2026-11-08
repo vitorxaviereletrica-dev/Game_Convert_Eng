@@ -563,6 +563,62 @@ style.textContent = `
   gap: 6px;
   backdrop-filter: blur(10px);
 }
+
+/* Painel de resultado da rodada */
+#ec-camp .rs { max-width: 560px; }
+#ec-camp .rs-top { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 14px; }
+#ec-camp .rs-pill { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; padding: 9px 14px; border-radius: 999px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); font-weight: 600; color: #cbd5e1; font-size: 13px; }
+#ec-camp .rs-verdict { font-size: 28px; font-weight: 800; text-align: center; margin: 10px 0 16px; }
+#ec-camp .rs-hero { background: rgba(91,138,201,.08); border: 1px solid rgba(91,138,201,.4); border-radius: 22px; padding: 22px 16px; text-align: center; }
+#ec-camp .rs-label { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: #94a3b8; font-weight: 700; }
+#ec-camp .rs-big { font-size: 64px; font-weight: 800; line-height: 1.05; margin-top: 8px; }
+#ec-camp .rs-big small { font-size: 22px; color: #94a3b8; font-weight: 600; }
+#ec-camp .rs-hint { text-align: center; color: #94a3b8; margin: 14px 0 10px; font-size: 13px; }
+#ec-camp .rs-star { text-align: center; color: #c084fc; font-weight: 700; margin-bottom: 14px; font-size: 14px; }
+#ec-camp .rs-tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+#ec-camp .rs-tile { border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.03); border-radius: 16px; padding: 14px 6px; text-align: center; }
+#ec-camp .rs-ti { font-size: 22px; font-weight: 800; }
+#ec-camp .rs-tl { font-size: 11px; letter-spacing: .14em; color: #94a3b8; margin-top: 6px; }
+#ec-camp .rs-tv { font-size: 26px; font-weight: 800; margin-top: 4px; }
+#ec-camp .rs-sec { font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #8aa4cf; font-weight: 700; margin: 6px 2px 10px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; }
+#ec-camp .rs-sec-r { text-transform: none; letter-spacing: 0; font-weight: 500; color: #94a3b8; font-size: 12px; }
+#ec-camp .rs-card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; padding: 16px; margin-bottom: 14px; }
+#ec-camp .rs-bar-h { display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 8px; }
+#ec-camp .rs-bar-h span:last-child { color: #94a3b8; }
+#ec-camp .rs-bar { height: 9px; border-radius: 99px; background: rgba(255,255,255,.08); overflow: hidden; }
+#ec-camp .rs-bar i { display: block; height: 100%; border-radius: 99px; }
+#ec-camp .rs-donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-top: 18px; }
+#ec-camp .rs-leg { list-style: none; margin: 0; padding: 0; align-self: flex-start; font-size: 13px; color: #cbd5e1; }
+#ec-camp .rs-leg li { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+#ec-camp .rs-leg b { width: 14px; height: 14px; border-radius: 3px; display: inline-block; }
+#ec-camp .rs-donut { width: 190px; height: 190px; }
+#ec-camp .rs-dl { fill: #cbd5e1; font-size: 8px; letter-spacing: .08em; }
+#ec-camp .rs-dn { fill: #fff; font-size: 24px; font-weight: 800; }
+#ec-camp .rs-lvl { display: flex; gap: 12px; align-items: center; margin-bottom: 12px; }
+#ec-camp .rs-ico { width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: rgba(91,138,201,.18); color: #7aa7e6; font-size: 24px; font-weight: 800; flex: none; }
+#ec-camp .rs-lvl-t { font-weight: 700; font-size: 16px; }
+#ec-camp .rs-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+#ec-camp .rs-chip { padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); font-size: 12px; color: #cbd5e1; }
+#ec-camp .rs-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px; margin-bottom: 8px; border-radius: 14px; background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
+#ec-camp .rs-q { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
+#ec-camp .rs-ans { display: flex; align-items: center; gap: 6px; flex: none; font-size: 14px; max-width: 62%; flex-wrap: wrap; justify-content: flex-end; }
+#ec-camp .rs-bad { color: #e06c75; text-decoration: line-through; }
+#ec-camp .rs-arrow { color: #64748b; }
+#ec-camp .rs-ok { padding: 4px 10px; border-radius: 999px; background: rgba(94,207,163,.16); color: #5ecfa3; font-weight: 700; }
+#ec-camp .rs-time { color: #94a3b8; font-size: 13px; }
+#ec-camp .rs-time.slow { color: #e0b44c; }
+#ec-camp .rs-g { color: #5ecfa3; } #ec-camp .rs-r { color: #e06c75; }
+#ec-camp .rs-link { display: block; width: 100%; background: none; border: 0; color: #6ea0e6; font: 600 14px var(--font-sans, Inter); padding: 10px; cursor: pointer; }
+#ec-camp .rs-all { display: block; margin: 4px auto 14px; padding: 11px 22px; border-radius: 999px; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12); color: #94a3b8; font: 600 14px var(--font-sans, Inter); cursor: pointer; }
+#ec-camp .rs-tabbar { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid rgba(255,255,255,.1); }
+#ec-camp .rs-tabbar button { background: none; border: 0; border-bottom: 3px solid transparent; color: #64748b; font: 700 13px var(--font-sans, Inter); letter-spacing: .1em; text-transform: uppercase; padding: 14px 6px; cursor: pointer; }
+#ec-camp .rs-tabbar button.on { color: #fff; border-bottom-color: #5b8ac9; }
+#ec-camp .rs-pane { background: rgba(255,255,255,.03); padding: 6px 16px; border-radius: 0 0 16px 16px; }
+#ec-camp .rs-kv { display: flex; justify-content: space-between; gap: 10px; padding: 14px 0; color: #cbd5e1; }
+#ec-camp .rs-kv b { color: #fff; }
+#ec-camp .rs-actions { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 10px; margin: 22px -16px 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: rgba(10,14,26,.96); border-top: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+#ec-camp .rs-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 58px; background: none; border: 0; color: #94a3b8; font: 600 12px var(--font-sans, Inter); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; border-radius: 14px; }
+#ec-camp .rs-btn.primary { flex: 1.6; background: #5b8ac9; color: #fff; font-size: 15px; letter-spacing: .1em; }
 `;
 document.head.appendChild(style);
 
@@ -578,7 +634,7 @@ keypad.className = 'ec-keypad minimized';
 keypad.innerHTML = `
   <div class="ec-keypad-bar">
     <span class="ec-keypad-title">⌨️ Teclado Numérico Eng</span>
-    <button type="button" class="ec-keypad-min-btn" id="ec-kp-close">Minimizar</button>
+    <button type="button" class="ec-keypad-min-btn" id="ec-kp-close">Teclado do sistema</button>
   </div>
   <div class="ec-keypad-grid">
     <button type="button" class="ec-kp-btn" data-k="7">7</button>
@@ -594,7 +650,7 @@ keypad.innerHTML = `
     <button type="button" class="ec-kp-btn" data-k="1">1</button>
     <button type="button" class="ec-kp-btn" data-k="2">2</button>
     <button type="button" class="ec-kp-btn" data-k="3">3</button>
-    <button type="button" class="ec-kp-btn ec-kp-op" data-k="sign" title="Sinal negativo">±</button>
+    <button type="button" class="ec-kp-btn ec-kp-op" data-k="minus" title="Sinal de menos (use no expoente: 10^-2)">−</button>
 
     <button type="button" class="ec-kp-btn" data-k="0">0</button>
     <button type="button" class="ec-kp-btn" data-k=",">,</button>
@@ -626,11 +682,18 @@ function setNativeValue(element, value) {
   element.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
+let lastInput = null;
+document.addEventListener('focusin', (e) => {
+  const t = e.target;
+  if (t && t.tagName === 'INPUT' && t.type !== 'hidden') lastInput = t;
+});
+
 function getTargetInput() {
   const active = document.activeElement;
   if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA') && !active.disabled && active.type !== 'hidden') {
     return active;
   }
+  if (lastInput && document.contains(lastInput) && !lastInput.disabled) return lastInput;
   return document.querySelector('input:not([type="hidden"]):not([disabled])');
 }
 
@@ -643,19 +706,18 @@ keypad.addEventListener('click', (e) => {
 
   const k = btn.dataset.k;
   const input = getTargetInput();
-  if (!input) return;
+  if (!input || input.readOnly) return;
 
   let val = input.value || '';
   if (k === 'clear') {
     setNativeValue(input, '');
   } else if (k === 'backspace') {
-    setNativeValue(input, val.slice(0, -1));
-  } else if (k === 'sign') {
-    if (val.startsWith('-')) setNativeValue(input, val.slice(1));
-    else setNativeValue(input, '-' + val);
+    setNativeValue(input, val.endsWith('×10^') ? val.slice(0, -4) : val.slice(0, -1));
+  } else if (k === 'minus') {
+    setNativeValue(input, val + '-');
   } else if (k === 'sci') {
-    if (!val.includes('× 10^') && !val.includes('e')) {
-      setNativeValue(input, val + ' × 10^');
+    if (!/[×eE]/.test(val)) {
+      setNativeValue(input, (val === '' || val === '-' ? val + '1' : val) + '×10^');
     }
   } else if (k === 'enter') {
     playBeep(880, 'sine', 0.08);
@@ -672,29 +734,68 @@ keypad.addEventListener('click', (e) => {
   input.focus();
 });
 
+/* Tocar nas teclas não pode tirar o foco do campo */
+keypad.addEventListener('mousedown', (e) => e.preventDefault());
+kpFab.addEventListener('mousedown', (e) => e.preventDefault());
+
+const isTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+const KP_PREF = 'engconvert:keypad:min';
+let kpUserMin = false;
+try { kpUserMin = localStorage.getItem(KP_PREF) === '1'; } catch (e) {}
+
+function syncKeypad() {
+  const inputs = Array.from(document.querySelectorAll('input:not([type="hidden"]):not([disabled])'));
+  if (!inputs.length) {
+    keypad.classList.add('minimized');
+    kpFab.style.display = 'none';
+    document.body.style.paddingBottom = '';
+    return;
+  }
+  // Celular: o teclado abre sozinho (a menos que o usuário tenha escolhido o teclado do sistema)
+  if (isTouch && !kpUserMin && keypad.classList.contains('minimized')) keypad.classList.remove('minimized');
+  const open = !keypad.classList.contains('minimized');
+  kpFab.style.display = open ? 'none' : 'flex';
+  inputs.forEach((inp) => {
+    if (inp.dataset.ecIm === undefined) inp.dataset.ecIm = inp.getAttribute('inputmode') || '';
+    if (open && isTouch) {
+      // some o teclado do sistema para não empilhar dois teclados
+      if (inp.getAttribute('inputmode') !== 'none') {
+        inp.setAttribute('inputmode', 'none');
+        if (document.activeElement === inp) { inp.blur(); inp.focus(); }
+      }
+    } else if (inp.getAttribute('inputmode') === 'none') {
+      if (inp.dataset.ecIm) inp.setAttribute('inputmode', inp.dataset.ecIm);
+      else inp.removeAttribute('inputmode');
+      if (document.activeElement === inp) { inp.blur(); inp.focus(); }
+    }
+  });
+  // deixa o conteúdo rolar por cima do teclado
+  document.body.style.paddingBottom = open ? (keypad.offsetHeight + 12) + 'px' : '';
+}
+
 document.getElementById('ec-kp-close').onclick = () => {
   keypad.classList.add('minimized');
-  kpFab.style.display = 'flex';
+  kpUserMin = true;
+  try { localStorage.setItem(KP_PREF, '1'); } catch (e) {}
+  syncKeypad();
 };
 kpFab.onclick = () => {
   keypad.classList.remove('minimized');
-  kpFab.style.display = 'none';
+  kpUserMin = false;
+  try { localStorage.setItem(KP_PREF, '0'); } catch (e) {}
+  syncKeypad();
 };
 
-// Monitora se há inputs na tela para exibir o atalho do teclado
-setInterval(() => {
-  const hasInput = !!document.querySelector('input:not([type="hidden"]):not([disabled])');
-  if (hasInput && kpFab.style.display === 'none' && keypad.classList.contains('minimized')) {
-    kpFab.style.display = 'flex';
-  } else if (!hasInput && keypad.classList.contains('minimized')) {
-    kpFab.style.display = 'none';
-  }
-}, 800);
+// Sincroniza assim que a tela muda (antes do teclado do sistema aparecer) e por segurança a cada 500 ms
+new MutationObserver(syncKeypad).observe(document.body, { childList: true, subtree: true });
+document.addEventListener('focusin', syncKeypad);
+setInterval(syncKeypad, 500);
 
 /* --- Variáveis de Navegação Unificada --- */
 let activeMode = 'fases'; // 'fases' | 'campanha' | 'tricks'
 let view = 'home'; // Campanha: 'home' | 'category' | 'learn' | 'quiz' | 'result'
 let cat = '', level = 1, star = 1, qs = [], idx = 0, correct = 0, chosen = null, learned = false;
+let roundLog = [], qT0 = 0;   // registro da rodada: tempo e resposta de cada questão
 
 /* --- Sanitizador de HTML --- */
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -838,8 +939,10 @@ function genQuestion(c, l, s) {
     const full = base * Math.pow(10, exp);
     return {
       txt: `Converta para notação científica: ${full}`,
+      label: `${full} → notação científica`,
       prompt: `${full} = `,
       ans: `${base} × 10^${exp}`,
+      sciAnswer: true,
       rule: 'Deixe apenas 1 algarismo não-nulo antes da vírgula.'
     };
   }
@@ -857,6 +960,7 @@ function genQuestion(c, l, s) {
 
   return {
     txt: `Converta: quanto vale ${val} ${u1} em ${u2}?`,
+    label: `${val} ${u1} → ${u2}`,
     prompt: `${val} ${u1} = `,
     targetUnit: u2,
     ans: String(resFmt),
@@ -868,12 +972,14 @@ function startCampRound() {
   qs = Array.from({ length: 5 }, () => genQuestion(cat, level, star));
   idx = 0;
   correct = 0;
+  roundLog = [];
   campQuiz();
 }
 
 function campQuiz() {
   view = 'quiz';
   const q = qs[idx];
+  qT0 = Date.now();
 
   modal.innerHTML = `
     <div class="wrap">
@@ -912,10 +1018,11 @@ function campQuiz() {
   document.getElementById('ec-quiz-form').onsubmit = (e) => {
     e.preventDefault();
     const inp = document.getElementById('ec-val');
-    const user = (inp.value || '').trim().replace(',', '.').replace(/\s+/g, '');
-    const expected = q.ans.replace(',', '.').replace(/\s+/g, '');
-
-    const isCorrect = user === expected || Math.abs(Number(user) - Number(expected)) < 0.01;
+    const isCorrect = ecAnswerOk(inp.value || '', q);
+    roundLog.push({
+      label: q.label || q.txt, user: (inp.value || '').trim(), ans: q.ans, unit: q.targetUnit || '',
+      ok: isCorrect, secs: Math.max(0, (Date.now() - qT0) / 1000)
+    });
     if (isCorrect) {
       correct++;
       playBeep(880, 'sine', 0.1);
@@ -934,6 +1041,47 @@ function campQuiz() {
   };
 }
 
+/* --- Conferência de respostas tolerante (2.5x10^-2, 2,5×10^-2, 2.5e-2, 2,5×10⁻²) --- */
+function ecParseNum(str) {
+  const SUP = '⁰¹²³⁴⁵⁶⁷⁸⁹';
+  let t = String(str).trim().replace(/\s+/g, '').replace(/−/g, '-');
+  t = t.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻⁺]+/g, (m) => '^' + [...m].map((c) => (SUP.indexOf(c) >= 0 ? SUP.indexOf(c) : (c === '⁻' ? '-' : ''))).join(''));
+  const num = (x) => { x = x.replace(',', '.'); return /^[+-]?(\d+\.?\d*|\.\d+)$/.test(x) ? Number(x) : NaN; };
+  let m = t.match(/^([+-]?[\d.,]+)[×xX*·]10\^?([+-]?\d+)$/);
+  if (m) return num(m[1]) * Math.pow(10, Number(m[2]));
+  m = t.match(/^([+-]?[\d.,]+)[eE]([+-]?\d+)$/);
+  if (m) return num(m[1]) * Math.pow(10, Number(m[2]));
+  return num(t);
+}
+function ecIsSci(str) { return /[eE×xX*·]|10\^|[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/.test(str); }
+function ecAnswerOk(raw, q) {
+  const u = ecParseNum(raw), e = ecParseNum(q.ans);
+  if (!Number.isFinite(u) || !Number.isFinite(e)) return false;
+  if (q.sciAnswer && !ecIsSci(raw)) return false;   // pediu notação científica: tem que vir em notação científica
+  const rel = Math.abs(e) * 0.01;
+  return Math.abs(u - e) <= (q.sciAnswer ? rel : Math.max(rel, 1e-4));
+}
+
+/* --- Painel de resultado da rodada (indicadores) --- */
+const RS_SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
+const ecPretty = (t) => String(t).replace(/\^(-?\d+)/g, (m, e) => [...e].map((c) => RS_SUP[c] || c).join(''));
+const metaFor = (c) => (defs[c] && defs[c].sci ? 15 : 10);   // meta de tempo médio (s) por problema
+const fmt1 = (n) => n.toFixed(1).replace('.', ',');
+
+function rsAnsPill(r) { return `<span class="rs-ok">${esc(ecPretty(r.ans))}${r.unit ? ' ' + esc(r.unit) : ''}</span>`; }
+
+function rsIssueRow(r) {
+  const right = r.ok
+    ? `<span class="rs-time slow">${fmt1(r.secs)}s</span>${rsAnsPill(r)}`
+    : `<span class="rs-bad">${r.user ? esc(r.user) : '—'}</span><span class="rs-arrow">→</span>${rsAnsPill(r)}`;
+  return `<div class="rs-row"><span class="rs-q">${esc(r.label)}</span><span class="rs-ans">${right}</span></div>`;
+}
+
+function rsAllRow(r, meta) {
+  return `<div class="rs-row"><span class="rs-q"><b class="${r.ok ? 'rs-g' : 'rs-r'}">${r.ok ? '✓' : '✗'}</b> ${esc(r.label)}</span>` +
+    `<span class="rs-ans"><span class="rs-time${r.secs > meta ? ' slow' : ''}">${fmt1(r.secs)}s</span></span></div>`;
+}
+
 function campResult() {
   view = 'result';
   const passed = correct >= 4;
@@ -946,32 +1094,118 @@ function campResult() {
     saveCamp();
   }
 
+  const meta = metaFor(cat);
+  const n = roundLog.length;
+  const total = n || 1;
+  const wrongs = roundLog.filter((r) => !r.ok);
+  const slows = roundLog.filter((r) => r.secs > meta);
+  const slowOk = slows.filter((r) => r.ok);
+  const avg = roundLog.reduce((a, r) => a + r.secs, 0) / total;
+  const totalSecs = Math.round(roundLog.reduce((a, r) => a + r.secs, 0));
+  const precision = Math.round((correct / total) * 100);
+  const sharp = n - slows.length;
+  const pctSharp = Math.round((sharp / total) * 100);
+  const catStars = [1, 2, 3, 4, 5].reduce((a, l) => a + stars(cat, l), 0);
+  const mastery = Math.round((catStars / 15) * 100);
+  const perfect = n > 0 && correct === n && !slows.length;
+  const verdict = passed ? (perfect ? 'Domínio total!' : 'Boa rodada!') : 'Precisa de mais prática';
+  const hint = wrongs.length ? 'Trabalhe a precisão' : (slows.length ? 'Trabalhe a velocidade' : 'Precisão e velocidade em dia');
+  const hint2 = slows.length ? ` · ${slows.length} problema${slows.length > 1 ? 's' : ''} acima do limite` : '';
+  const lvlName = levels[level - 1][0];
+
+  const R = 52, C = 2 * Math.PI * R;
+  const slowLen = C * (slows.length / total);
+  const donut = `
+    <svg viewBox="0 0 120 120" class="rs-donut" role="img" aria-label="${pctSharp}% respondido dentro da meta">
+      <circle cx="60" cy="60" r="${R}" fill="none" stroke="#2a3350" stroke-width="16"/>
+      <circle cx="60" cy="60" r="${R}" fill="none" stroke="#4a6fa5" stroke-width="16" stroke-dasharray="${(C - slowLen).toFixed(2)} ${C.toFixed(2)}" transform="rotate(-90 60 60)"/>
+      ${slows.length ? `<circle cx="60" cy="60" r="${R}" fill="none" stroke="#98a67a" stroke-width="16" stroke-dasharray="${slowLen.toFixed(2)} ${C.toFixed(2)}" stroke-dashoffset="${(-(C - slowLen)).toFixed(2)}" transform="rotate(-90 60 60)"/>` : ''}
+      <text x="60" y="55" text-anchor="middle" class="rs-dl">RESPONDIDAS</text>
+      <text x="60" y="78" text-anchor="middle" class="rs-dn">${n}</text>
+    </svg>`;
+
+  const issues = wrongs.concat(slowOk);
+  const shown = issues.slice(0, 3), more = issues.slice(3);
+  const improve = issues.length ? `
+    <div class="rs-card">
+      <div class="rs-sec">O que melhorar</div>
+      <div class="rs-lvl"><div class="rs-ico">×</div>
+        <div><div class="rs-lvl-t">Nv ${level} · ${esc(cat)}</div>
+          <div class="rs-chips">
+            ${wrongs.length ? `<span class="rs-chip">${wrongs.length} errada${wrongs.length > 1 ? 's' : ''}</span>` : ''}
+            ${slows.length ? `<span class="rs-chip">${slows.length} lent${slows.length > 1 ? 'as' : 'a'} (&gt;${meta}s)</span>` : ''}
+            <span class="rs-chip">méd. ${fmt1(avg)}s</span>
+          </div></div></div>
+      ${shown.map(rsIssueRow).join('')}
+      ${more.length ? `<div id="rs-more" hidden>${more.map(rsIssueRow).join('')}</div>
+        <button type="button" class="rs-link" data-rs-toggle="rs-more">+ ${more.length} mais · ver análise completa</button>` : ''}
+    </div>` : '';
+
   modal.innerHTML = `
-    <div class="wrap">
-      <div class="header">
-        <div class="title">Resultado da Rodada</div>
-        <button class="btn-back" data-act="camp-cat">← Voltar aos Níveis</button>
+    <div class="wrap rs">
+      <div class="rs-top"><span class="rs-pill">Trilha de Domínio · ${esc(cat)} · Nv ${level}</span>
+        <button class="btn-back" data-act="camp-cat" style="padding:6px 12px;">Níveis</button></div>
+
+      <div class="rs-verdict" style="color:${passed ? '#4ade80' : '#e8edf7'};">${verdict}</div>
+
+      <div class="rs-hero">
+        <div class="rs-label">${passed ? 'Correto · estrela ' + star : 'Correto'}</div>
+        <div class="rs-big">${correct}<small> / ${n}</small></div>
+      </div>
+      <div class="rs-hint">${hint}${hint2}</div>
+      ${passed ? `<div class="rs-star">${star >= 3 ? '⭐ Nível totalmente dominado com 3 estrelas!' : '⭐ Estrela ' + star + ' desbloqueada!'}</div>` : ''}
+
+      <div class="rs-tiles">
+        <div class="rs-tile"><div class="rs-ti" style="color:#5ecfa3">✓</div><div class="rs-tl">CERTO</div><div class="rs-tv" style="color:#5ecfa3">${correct}</div></div>
+        <div class="rs-tile"><div class="rs-ti" style="color:#e06c75">✗</div><div class="rs-tl">ERRADO</div><div class="rs-tv" style="color:#e06c75">${n - correct}</div></div>
+        <div class="rs-tile"><div class="rs-ti" style="color:#4fb9c9">%</div><div class="rs-tl">PRECISÃO</div><div class="rs-tv" style="color:#4fb9c9">${precision}%</div></div>
       </div>
 
-      <div class="quiz-box" style="text-align:center;">
-        <div style="font-size:42px;margin-bottom:8px;">${passed ? '🎉' : '💪'}</div>
-        <div style="font-size:22px;font-weight:800;color:${passed ? '#4ade80' : '#f87171'};">
-          ${passed ? 'Parabéns! Rodada Concluída!' : 'Precisa de mais treino!'}
+      <div class="rs-sec" style="margin-top:22px;">Para onde foi o tempo
+        <span class="rs-sec-r">${totalSecs}s no total · meta média: ≤ ${meta}s por problema</span></div>
+      <div class="rs-card">
+        <div class="rs-bar-h"><span>Afiado (≤ ${meta}s)</span><span>${sharp} qs</span></div>
+        <div class="rs-bar"><i style="width:${pctSharp}%;background:#5ecfa3"></i></div>
+        <div class="rs-bar-h" style="margin-top:14px;"><span>Acima do limite (&gt; ${meta}s)</span><span>${slows.length} qs</span></div>
+        <div class="rs-bar"><i style="width:${100 - pctSharp}%;background:#e0b44c"></i></div>
+        <div class="rs-donut-wrap">
+          <ul class="rs-leg"><li><b style="background:#4a6fa5"></b>${pctSharp}% respondido em ≤ ${meta}s</li>
+            <li><b style="background:#98a67a"></b>${100 - pctSharp}% respondido em &gt; ${meta}s</li></ul>
+          ${donut}
         </div>
-        <div style="font-size:16px;margin:10px 0 16px;color:#cbd5e1;">
-          Você acertou <b>${correct}</b> de <b>5</b> questões.
+      </div>
+
+      ${improve}
+
+      <button type="button" class="rs-all" data-rs-toggle="rs-all">Ver todos os problemas ›</button>
+      <div id="rs-all" class="rs-card" hidden>${roundLog.map((r) => rsAllRow(r, meta)).join('')}</div>
+
+      <div class="rs-tabs">
+        <div class="rs-tabbar">
+          <button type="button" class="on" data-rs-tab="det">Detalhes do nível</button>
+          <button type="button" data-rs-tab="jor">Jornada de habilidade</button>
         </div>
+        <div data-rs-pane="det" class="rs-pane">
+          <div class="rs-kv"><span>⏱ Tempo-meta por problema</span><b>${meta}s</b></div>
+          <div class="rs-kv"><span>🎯 Progresso de domínio (${esc(cat)})</span><b>${mastery}%</b></div>
+          <div class="rs-kv"><span>⭐ Nível</span><b>${level} · ${esc(lvlName)}</b></div>
+        </div>
+        <div data-rs-pane="jor" class="rs-pane" hidden>
+          ${levels.map(([nm], i) => {
+            const st = stars(cat, i + 1);
+            return `<div class="rs-kv"><span>Nv ${i + 1} · ${esc(nm)}</span><b style="color:${st ? '#facc15' : '#64748b'}">${'★'.repeat(st)}${'☆'.repeat(3 - st)}</b></div>`;
+          }).join('')}
+        </div>
+      </div>
 
-        ${passed ? `<div style="font-size:14px;color:#c084fc;margin-bottom:16px;">
-          ${star >= 3 ? '⭐ Nível totalmente dominado com 3 estrelas!' : `⭐ Estrela ${star} desbloqueada com sucesso!`}
-        </div>` : ''}
-
-        <button class="quiz-submit" data-act="${passed ? (star < 3 ? 'next-star' : 'camp-cat') : 'retry-round'}">
-          ${passed ? (star < 3 ? 'Disputar Próxima Estrela' : 'Voltar aos Níveis') : 'Tentar Novamente'}
-        </button>
+      <div class="rs-actions">
+        <button type="button" class="rs-btn" data-act="camp-cat">☰<span>Níveis</span></button>
+        ${passed ? '<button type="button" class="rs-btn" data-act="retry-round">↻<span>Jogar de novo</span></button>' : ''}
+        <button type="button" class="rs-btn primary" data-act="${passed ? (star < 3 ? 'next-star' : 'camp-cat') : 'retry-round'}">${passed ? (star < 3 ? 'Continuar' : 'Voltar aos níveis') : 'Tentar novamente'}</button>
       </div>
     </div>
   `;
+  modal.scrollTop = 0;
 }
 
 /* =========================================================================
@@ -1221,6 +1455,23 @@ setInterval(ensureModeNav, 1000);
 
 /* --- Manipulador de Cliques Gerais do Modal --- */
 modal.addEventListener('click', (e) => {
+  const tabBtn = e.target.closest('[data-rs-tab]');
+  if (tabBtn) {
+    const box = tabBtn.closest('.rs-tabs');
+    box.querySelectorAll('[data-rs-tab]').forEach((b) => b.classList.toggle('on', b === tabBtn));
+    box.querySelectorAll('[data-rs-pane]').forEach((p) => { p.hidden = p.dataset.rsPane !== tabBtn.dataset.rsTab; });
+    return;
+  }
+  const tog = e.target.closest('[data-rs-toggle]');
+  if (tog) {
+    const el = document.getElementById(tog.dataset.rsToggle);
+    if (el) {
+      el.hidden = !el.hidden;
+      if (tog.classList.contains('rs-all')) tog.textContent = el.hidden ? 'Ver todos os problemas ›' : 'Ocultar problemas ‹';
+      else tog.hidden = true;
+    }
+    return;
+  }
   const catCard = e.target.closest('[data-cat]');
   if (catCard) {
     cat = catCard.dataset.cat;
