@@ -619,6 +619,19 @@ style.textContent = `
 #ec-camp .rs-actions { position: sticky; bottom: 0; z-index: 5; display: flex; gap: 10px; margin: 22px -16px 0; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); background: rgba(10,14,26,.96); border-top: 1px solid rgba(255,255,255,.1); backdrop-filter: blur(10px); }
 #ec-camp .rs-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 58px; background: none; border: 0; color: #94a3b8; font: 600 12px var(--font-sans, Inter); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; border-radius: 14px; }
 #ec-camp .rs-btn.primary { flex: 1.6; background: #5b8ac9; color: #fff; font-size: 15px; letter-spacing: .1em; }
+
+/* Feedback imediato da questão (Trilha) */
+#ec-camp .quiz-box { transition: border-color .2s ease, background .2s ease, box-shadow .2s ease; }
+#ec-camp .quiz-box.ok { border-color: #22c55e; background: rgba(34,197,94,.10); box-shadow: 0 0 32px -10px #22c55e; }
+#ec-camp .quiz-box.bad { border-color: #ef4444; background: rgba(239,68,68,.07); box-shadow: 0 0 32px -12px #ef4444; }
+#ec-camp .quiz-input.ok { border-color: #22c55e; background: rgba(34,197,94,.16); color: #86efac; box-shadow: none; }
+#ec-camp .quiz-input.bad { border-color: #ef4444; background: rgba(239,68,68,.12); color: #fca5a5; text-decoration: line-through; box-shadow: none; }
+#ec-camp .quiz-submit.ok { background: linear-gradient(135deg, #16a34a, #22c55e); }
+#ec-camp .qfb { margin-top: 14px; padding: 14px 16px; border-radius: 14px; background: rgba(239,68,68,.10); border: 1px solid rgba(239,68,68,.45); }
+#ec-camp .qfb-t { color: #f87171; font-weight: 800; margin-bottom: 8px; }
+#ec-camp .qfb-r { font-size: 16px; }
+#ec-camp .qfb-h { color: #cbd5e1; font-size: 13px; margin-top: 8px; line-height: 1.4; }
+#ec-camp .qfb-h s { color: #f87171; }
 `;
 document.head.appendChild(style);
 
@@ -706,7 +719,8 @@ keypad.addEventListener('click', (e) => {
 
   const k = btn.dataset.k;
   const input = getTargetInput();
-  if (!input || input.readOnly) return;
+  if (!input) return;
+  if (input.readOnly && k !== 'enter') return;   // campo travado: só o ✓ (avançar) funciona
 
   let val = input.value || '';
   if (k === 'clear') {
@@ -771,6 +785,7 @@ function syncKeypad() {
   });
   // deixa o conteúdo rolar por cima do teclado
   document.body.style.paddingBottom = open ? (keypad.offsetHeight + 12) + 'px' : '';
+  modal.style.paddingBottom = open ? (keypad.offsetHeight + 24) + 'px' : '';
 }
 
 document.getElementById('ec-kp-close').onclick = () => {
@@ -1015,29 +1030,52 @@ function campQuiz() {
     if (inp) inp.focus();
   }, 50);
 
+  const myLog = roundLog;
+  let answered = false, timer = null;
+  const goNext = () => {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (view !== 'quiz' || roundLog !== myLog) return;   // saiu da rodada (ex.: Desistir): não avança
+    idx++;
+    if (idx < qs.length) campQuiz(); else campResult();
+  };
+
   document.getElementById('ec-quiz-form').onsubmit = (e) => {
     e.preventDefault();
+    if (answered) { goNext(); return; }   // segundo toque/Enter: avança na hora
+    answered = true;
+
+    const form = document.getElementById('ec-quiz-form');
     const inp = document.getElementById('ec-val');
+    const btn = document.getElementById('ec-submit');
+    const box = modal.querySelector('.quiz-box');
+    const typed = (inp.value || '').trim();
     const isCorrect = ecAnswerOk(inp.value || '', q);
-    roundLog.push({
-      label: q.label || q.txt, user: (inp.value || '').trim(), ans: q.ans, unit: q.targetUnit || '',
-      ok: isCorrect, secs: Math.max(0, (Date.now() - qT0) / 1000)
-    });
+    const secs = Math.max(0, (Date.now() - qT0) / 1000);
+    roundLog.push({ label: q.label || q.txt, user: typed, ans: q.ans, unit: q.targetUnit || '', ok: isCorrect, secs });
+    inp.readOnly = true;
+
     if (isCorrect) {
       correct++;
       playBeep(880, 'sine', 0.1);
       haptic(20);
+      box.classList.add('ok'); inp.classList.add('ok'); btn.classList.add('ok');
+      btn.textContent = '✓ Correto! · ' + fmt1(secs) + 's';
+      timer = setTimeout(goNext, 850);     // acertou: fica verde e segue sozinho
     } else {
       playBeep(220, 'sawtooth', 0.15);
       haptic(40);
-    }
-
-    idx++;
-    if (idx < qs.length) {
-      campQuiz();
-    } else {
-      campResult();
-    }
+      box.classList.add('bad'); inp.classList.add('bad');
+      btn.textContent = (idx + 1 >= qs.length) ? 'Ver resultado 🏆' : 'Próxima ➔';
+      form.insertAdjacentHTML('afterend', `
+        <div class="qfb" id="ec-fb">
+          <div class="qfb-t">✗ Resposta incorreta</div>
+          <div class="qfb-r">Resposta certa: <span class="rs-ok">${esc(ecShowAns(q.ans))}${q.targetUnit ? ' ' + esc(q.targetUnit) : ''}</span></div>
+          ${typed ? `<div class="qfb-h">Você digitou: <s>${esc(typed)}</s></div>` : ''}
+          ${q.rule ? `<div class="qfb-h">💡 ${esc(q.rule)}</div>` : ''}
+        </div>`);
+      const fb = document.getElementById('ec-fb');
+      if (fb && fb.scrollIntoView) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }                                        // errou: mostra a certa e espera "Próxima"
   };
 }
 
@@ -1065,10 +1103,11 @@ function ecAnswerOk(raw, q) {
 /* --- Painel de resultado da rodada (indicadores) --- */
 const RS_SUP = { '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴', '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹', '-': '⁻' };
 const ecPretty = (t) => String(t).replace(/\^(-?\d+)/g, (m, e) => [...e].map((c) => RS_SUP[c] || c).join(''));
+const ecShowAns = (t) => ecPretty(String(t).replace(/(\d)\.(\d)/g, '$1,$2'));
 const metaFor = (c) => (defs[c] && defs[c].sci ? 15 : 10);   // meta de tempo médio (s) por problema
 const fmt1 = (n) => n.toFixed(1).replace('.', ',');
 
-function rsAnsPill(r) { return `<span class="rs-ok">${esc(ecPretty(r.ans))}${r.unit ? ' ' + esc(r.unit) : ''}</span>`; }
+function rsAnsPill(r) { return `<span class="rs-ok">${esc(ecShowAns(r.ans))}${r.unit ? ' ' + esc(r.unit) : ''}</span>`; }
 
 function rsIssueRow(r) {
   const right = r.ok
