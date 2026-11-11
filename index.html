@@ -670,6 +670,25 @@ style.textContent = `
 
 /* Cabeçalho de grupo na tela de grandezas */
 #ec-camp .cat-group { grid-column: 1 / -1; margin: 16px 2px 0; font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #8aa4cf; }
+
+/* Feedback pedagógico: resolução, diagnóstico e tutorial de análise dimensional */
+#ec-camp .qfb-diag { margin-top:12px; padding:12px 14px; border-radius:12px; background:rgba(245,158,11,.12); border:1px solid rgba(245,158,11,.4); }
+#ec-camp .qfb-diag-t { color:#fbbf24; font-weight:800; font-size:13px; margin-bottom:4px; }
+#ec-camp .qfb-diag-d { color:#fef3c7; font-size:12.5px; line-height:1.45; }
+#ec-camp .qfb-step { margin-top:12px; padding:12px 14px; border-radius:12px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.12); }
+#ec-camp .qfb-step-title { color:#c084fc; font-weight:800; font-size:13px; margin-bottom:8px; }
+#ec-camp .qfb-step-item { color:#e2e8f0; font-size:12.5px; line-height:1.5; margin-bottom:6px; }
+#ec-camp .qfb-step-item:last-child { margin-bottom:0; }
+#ec-camp .qfb-step-item code { background:rgba(0,0,0,.4); color:#38bdf8; padding:2px 6px; border-radius:4px; font-family:var(--font-mono,monospace); font-size:12px; }
+#ec-camp .dim-card { background:var(--glass,rgba(15,23,42,.7)); border:1px solid var(--color-border,rgba(255,255,255,.1)); border-radius:16px; padding:18px; margin:14px 0; }
+#ec-camp .dim-card h3 { font-size:16px; font-weight:800; margin-bottom:8px; color:#f8fafc; }
+#ec-camp .dim-step { display:flex; gap:10px; align-items:flex-start; margin:12px 0; color:#e2e8f0; font-size:13px; line-height:1.55; }
+#ec-camp .dim-num { flex:0 0 26px; height:26px; border-radius:50%; display:grid; place-items:center; background:rgba(124,58,237,.3); color:#d8b4fe; font-weight:800; }
+#ec-camp .dim-eq { overflow-wrap:anywhere; background:rgba(0,0,0,.4); border:1px solid rgba(255,255,255,.1); border-radius:10px; padding:12px; margin:10px 0; font:600 13px/1.6 var(--font-mono,monospace); color:#7dd3fc; text-align:center; }
+#ec-camp .dim-note { color:#94a3b8; font-size:12px; line-height:1.5; margin-top:8px; }
+#ec-camp .btn-dim-link { margin-top:12px; background:rgba(124,58,237,.2); border:1px solid rgba(192,132,252,.35); color:#c084fc; border-radius:8px; padding:7px 12px; font:600 12px var(--font-sans,Inter); cursor:pointer; }
+#ec-camp .btn-dim-link:hover { background:rgba(124,58,237,.35); color:#fff; }
+
 `;
 document.head.appendChild(style);
 
@@ -869,6 +888,7 @@ function campHome() {
       <div class="header">
         <div>
           <div class="title">🏆 Trilha de Domínio de Engenharia</div>
+          <button class="btn-dim-link" data-act="dim-tutorial">📐 Aprender análise dimensional</button>
           <div class="sub">Conquiste até ${nCats * 15} estrelas e domine as ${nCats} grandezas sem calculadora.</div>
         </div>
         <button class="btn-back" data-act="exit-to-menu">← Voltar às Fases</button>
@@ -1016,6 +1036,7 @@ function genQuestion(c, l, s) {
       prompt: `${full} = `,
       ans: `${base} × 10^${exp}`,
       sciAnswer: true,
+      category: c,
       rule: 'Deixe apenas 1 algarismo não-nulo antes da vírgula.'
     };
   }
@@ -1040,8 +1061,12 @@ function genQuestion(c, l, s) {
       label: `${val} ${uA} → ${uB}`,
       prompt: `${val} ${uA} = `,
       targetUnit: uB,
+      sourceUnit: uA,
+      sourceValue: val,
       ans: String(res),
-      rule: def.rule
+      rule: def.rule,
+      category: c,
+      affine: true
     };
   }
 
@@ -1064,8 +1089,14 @@ function genQuestion(c, l, s) {
     label: `${val} ${u1} → ${u2}`,
     prompt: `${val} ${u1} = `,
     targetUnit: u2,
+    sourceUnit: u1,
+    sourceValue: val,
+    sourceFactor: f1,
+    targetFactor: f2,
+    conversionFactor: f1 / f2,
     ans: String(resFmt),
-    rule: def.rule
+    rule: def.rule,
+    category: c
   };
 }
 
@@ -1075,6 +1106,56 @@ function startCampRound() {
   correct = 0;
   roundLog = [];
   campQuiz();
+}
+
+
+const DIM_DIAG_CATEGORIES = new Set(['Área','Volume','Inércia','Momento Fletor','Tensão','Pressão','Vazão','Energia & Potência','Carga Linear','Carga de Área','Peso Específico']);
+const dimFmt = (n) => Number(n.toPrecision(6)).toLocaleString('pt-BR', { maximumFractionDigits: 6 });
+function dimensionalFeedback(q) {
+  if (q.sciAnswer || q.affine || !Number.isFinite(q.sourceFactor) || !Number.isFinite(q.targetFactor)) return '';
+  const ratio = q.conversionFactor;
+  if (!Number.isFinite(ratio) || !Number.isFinite(q.sourceValue)) return '';
+  const factorLabel = `${dimFmt(ratio)} ${q.targetUnit} / ${q.sourceUnit}`;
+  const result = ecParseNum(q.ans);
+  const unitValue = ratio;
+  const userValue = ecParseNum(q._typed || '');
+  let diagnosis = '';
+  if (DIM_DIAG_CATEGORIES.has(q.category) && Number.isFinite(userValue) && userValue !== 0 && Number.isFinite(result) && result !== 0) {
+    const observed = userValue / q.sourceValue;
+    const expected = result / q.sourceValue;
+    const exponentGap = Math.log10(Math.abs(userValue / result));
+    if (Math.abs(exponentGap - Math.round(exponentGap)) < 0.08 && Math.abs(Math.round(exponentGap)) >= 1 && Math.abs(Math.round(exponentGap)) <= 6) {
+      diagnosis = `Seu resultado ficou cerca de 10<sup>${Math.round(exponentGap)}</sup> vezes ${exponentGap > 0 ? 'maior' : 'menor'} que o esperado. Isso costuma indicar erro na contagem de casas decimais ou no expoente da unidade.`;
+    } else if (Number.isFinite(observed) && Math.abs(observed - 1 / expected) <= Math.abs(1 / expected) * 0.03) {
+      diagnosis = 'Seu número se aproxima do fator inverso. Confira se o fator de conversão foi invertido: a unidade de partida deve cancelar.';
+    } else {
+      diagnosis = 'A ordem de grandeza não aponta claramente para um erro de expoente ou de sentido. Refça a multiplicação e confira as unidades que se cancelam.';
+    }
+  }
+  const steps = `<div class="qfb-step"><div class="qfb-step-title">📐 Resolução passo a passo</div>
+    <div class="qfb-step-item">1. Relação entre unidades: <code>1 ${esc(q.sourceUnit)} = ${dimFmt(unitValue)} ${esc(q.targetUnit)}</code>.</div>
+    <div class="qfb-step-item">2. Monte o fator para cancelar a unidade inicial: <code>${dimFmt(q.sourceValue)} ${esc(q.sourceUnit)} × (${dimFmt(ratio)} ${esc(q.targetUnit)} / 1 ${esc(q.sourceUnit)})</code>.</div>
+    <div class="qfb-step-item">3. Cancele <code>${esc(q.sourceUnit)}</code> e multiplique: <code>${dimFmt(q.sourceValue)} × ${dimFmt(ratio)} = ${dimFmt(result)} ${esc(q.targetUnit)}</code>.</div>
+    <div class="dim-note">O fator tem a unidade desejada no numerador e a unidade inicial no denominador. Em unidades elevadas ao quadrado, cubo ou quarta potência, a potência também se aplica ao fator de escala.</div>
+  </div>`;
+  const diag = diagnosis ? `<div class="qfb-diag"><div class="qfb-diag-t">🔎 Possível origem do erro</div><div class="qfb-diag-d">${diagnosis}</div></div>` : '';
+  return steps + diag;
+}
+function dimTutorial() {
+  view = 'dim-tutorial';
+  modal.innerHTML = `<div class="wrap">
+    <div class="header"><div><div class="title">📐 Análise dimensional</div><div class="sub">Uma técnica para decidir o fator e conferir sua resposta.</div></div><button class="btn-back" data-act="camp-home">← Voltar à Trilha</button></div>
+    <div class="dim-card"><h3>Como montar a conversão</h3>
+      <div class="dim-step"><span class="dim-num">1</span><span>Escreva a quantidade inicial com sua unidade. Decida qual unidade quer obter.</span></div>
+      <div class="dim-step"><span class="dim-num">2</span><span>Monte uma fração equivalente a 1, colocando a unidade inicial embaixo para que ela possa ser cancelada.</span></div>
+      <div class="dim-step"><span class="dim-num">3</span><span>Cancele as unidades iguais e faça a conta com os números. A unidade que sobrar deve ser a unidade pedida.</span></div>
+    </div>
+    <div class="dim-card"><h3>Exemplo 1 · comprimento</h3><div class="dim-eq">25 cm × (1 m / 100 cm) = 0,25 m</div><div class="dim-note">cm aparece em cima e embaixo, então cancela. O resultado fica em metros.</div></div>
+    <div class="dim-card"><h3>Exemplo 2 · área: a potência importa</h3><div class="dim-eq">1 m = 100 cm<br>(1 m)² = (100 cm)² = 10.000 cm²<br>0,5 m² × (10.000 cm² / 1 m²) = 5.000 cm²</div><div class="dim-note">Como a unidade está ao quadrado, o fator 100 também fica ao quadrado. Não use 100 para converter m² em cm²: use 100².</div></div>
+    <div class="dim-card"><h3>Exemplo 3 · momento fletor</h3><div class="dim-eq">1 kN·m = (1.000 N) × (1.000 mm)<br>1 kN·m = 1.000.000 N·mm</div><div class="dim-note">O fator 10³ da força e o fator 10³ do comprimento se multiplicam: 10³ × 10³ = 10⁶.</div></div>
+    <div class="dim-card"><h3>Cheque rápido</h3><div class="dim-step"><span class="dim-num">✓</span><span>A unidade final é a unidade pedida?</span></div><div class="dim-step"><span class="dim-num">✓</span><span>O fator está orientado para cancelar a unidade inicial?</span></div><div class="dim-step"><span class="dim-num">✓</span><span>Área, volume e inércia usam fatores ao quadrado, cubo e quarta potência?</span></div></div>
+    <button class="quiz-submit" data-act="camp-home">Voltar à Trilha</button>
+  </div>`;
 }
 
 function campQuiz() {
@@ -1136,6 +1217,7 @@ function campQuiz() {
     const box = modal.querySelector('.quiz-box');
     const typed = (inp.value || '').trim();
     const isCorrect = ecAnswerOk(inp.value || '', q);
+    q._typed = inp.value || '';
     const secs = Math.max(0, (Date.now() - qT0) / 1000);
     roundLog.push({ label: q.label || q.txt, user: typed, ans: q.ans, unit: q.targetUnit || '', ok: isCorrect, secs });
     inp.readOnly = true;
@@ -1158,6 +1240,7 @@ function campQuiz() {
           <div class="qfb-r">Resposta certa: <span class="rs-ok">${esc(ecShowAns(q.ans))}${q.targetUnit ? ' ' + esc(q.targetUnit) : ''}</span></div>
           ${typed ? `<div class="qfb-h">Você digitou: <s>${esc(typed)}</s></div>` : ''}
           ${q.rule ? `<div class="qfb-h">💡 ${esc(q.rule)}</div>` : ''}
+          ${dimensionalFeedback(q)}
         </div>`);
       const fb = document.getElementById('ec-fb');
       if (fb && fb.scrollIntoView) fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1629,6 +1712,8 @@ modal.addEventListener('click', (e) => {
     campLearn();
   } else if (act === 'retry-round') {
     startCampRound();
+  } else if (act === 'dim-tutorial') {
+    dimTutorial();
   } else if (act === 'tricks-home') {
     tricksHome();
   } else if (act === 'start-workout') {
